@@ -103,7 +103,6 @@ xen
                   'arm64-usr': '''
 openstack
 openstack_mini
-packet
 pxe
 qemu_uefi
 ''']
