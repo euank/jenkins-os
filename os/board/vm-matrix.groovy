@@ -105,7 +105,6 @@ qemu_uefi
 pxe
 openstack
 openstack_mini
-packet
 ''']
 
 /* Construct a matrix of build variation closures.  */
