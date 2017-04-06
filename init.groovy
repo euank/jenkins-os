@@ -22,6 +22,7 @@ final List<String> REQUIRED_PLUGINS = [
     "ssh-agent",
     "tap",
     "workflow-aggregator",
+    "aws-credentials",
 ]
 if (Jenkins.instance.pluginManager.plugins.collect {
         it.shortName
