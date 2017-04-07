@@ -193,6 +193,7 @@ stage('Downstream') {
         'board-vm-matrix': {
             if (false && params.COREOS_OFFICIAL == '1')
                 build job: 'sign-image', parameters: [
+                    string(name: 'AWS_DEV_CREDS', value: params.AWS_DEV_CREDS),
                     string(name: 'BOARD', value: params.BOARD),
                     string(name: 'GROUP', value: params.GROUP),
                     [$class: 'CredentialsParameterValue', name: 'BUILDS_CLONE_CREDS', value: params.BUILDS_CLONE_CREDS],
