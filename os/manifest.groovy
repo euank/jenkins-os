@@ -247,6 +247,8 @@ stage('Downstream') {
                 sleep time: minutes, unit: 'MINUTES'
                 build job: 'board/packages-matrix', parameters: [
                     string(name: 'AWS_DEV_CREDS', value: profile.AWS_DEV_CREDS ?: ''),
+                    string(name: 'AWS_DEV_BUCKET', value: profile.AWS_DEV_BUCKET ?: ''),
+                    string(name: 'AWS_REGION', value: profile.AWS_REGION ?: ''),
                     string(name: 'BOARD', value: board),
                     [$class: 'CredentialsParameterValue', name: 'BUILDS_CLONE_CREDS', value: profile.BUILDS_CLONE_CREDS ?: ''],
                     string(name: 'COREOS_OFFICIAL', value: dprops.COREOS_OFFICIAL),
