@@ -3,6 +3,16 @@
  */
 {
     /*
+     * The AWS image created can be uploaded to, and tested on, a development
+     * AWS account.
+     * These credentials should have sufficient access to S3 and EC2 to create
+     * a development image and to run the related tests.
+     */
+     "AWS_DEV_CREDS": "331c78f3-2656-42ef-a315-377f09fca4b1",
+     "AWS_DEV_BUCKET": "s3://s3-us-west-2.users.developer.core-os.net",
+     "AWS_REGION": "us-west-2",
+
+    /*
      * The OS build ID should be changed when building with a different
      * manifest job, when reusing build numbers would cause conflicting
      * branch names in the manifest-builds repository.
