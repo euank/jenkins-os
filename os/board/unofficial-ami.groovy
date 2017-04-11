@@ -103,6 +103,7 @@ bunzip2 -k -f ./tmp/coreos_production_ami_vmdk_image.vmdk.bz2
 
 NAME="jenkins-${JOB_NAME##*/}-${BUILD_NUMBER}"
 ore_output=$(bin/ore aws upload \
+    --bucket="${AWS_DEV_BUCKET}" \
     --region=${AWS_REGION} \
     --file=./tmp/coreos_production_ami_vmdk_image.vmdk \
     --board="${BOARD}" \
