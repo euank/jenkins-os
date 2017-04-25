@@ -13,7 +13,7 @@ properties([
         string(name: 'AWS_AMI_ID',
                description: 'AWS AMI to test'),
         string(name: 'AWS_AMI_TYPE',
-               defaultValue: 'HVM',
+               choices: "HVM\nPV",
                description: 'The type of the AMI, PV or HVM'),
         string(name: 'AWS_REGION',
                defaultValue: 'us-west-2',
@@ -64,6 +64,28 @@ timeout --signal=SIGQUIT 30m bin/kola run \
 '''  /* Editor quote safety: ' */
             }
         }
+    }
+
+    stage('Post-build') {
+        step([$class: 'TapPublisher',
+              discardOldReports: false,
+              enableSubtests: true,
+              failIfNoResults: true,
+              failedTestsMarkBuildAsFailure: true,
+              flattenTapResult: false,
+              includeCommentDiagnostics: true,
+              outputTapToConsole: true,
+              planRequired: true,
+              showOnlyFailures: false,
+              skipIfBuildNotOk: false,
+              stripSingleParents: false,
+              testResults: '*.tap',
+              todoIsFailure: false,
+              validateNumberOfTests: true,
+              verbose: true])
+
+        sh 'tar -cJf _kola_temp.tar.xz _kola_temp'
+        archiveArtifacts '_kola_temp.tar.xz'
     }
 }
 

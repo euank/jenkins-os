@@ -8,8 +8,6 @@ properties([
                defaultValue: 'https://github.com/coreos/manifest-builds.git'),
         string(name: 'MANIFEST_TAG',
                defaultValue: ''),
-        string(name: 'MANIFEST_NAME',
-               defaultValue: ''),
         [$class: 'CredentialsParameterDefinition',
          credentialType: 'com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey',
          defaultValue: '',
@@ -71,20 +69,22 @@ node('amd64') {
             ]) {
                 withEnv(["BOARD=amd64-usr",
                          "DOWNLOAD_ROOT=${params.DOWNLOAD_ROOT}",
-                         "MANIFEST_REF=${params.MANIFEST_REF}",
+                         "MANIFEST_TAG=${params.MANIFEST_TAG}",
                          "AWS_REGION=${params.AWS_REGION}",
                          "MANIFEST_URL=${params.MANIFEST_URL}"]) {
 
                     rc = sh returnStatus: true, script: '''#!/bin/bash -ex
 
-sudo rm -rf *.tap tmp manifests _kola_temp*
+sudo rm -rf tmp manifests
 
 # set up GPG for verifying tags
 export GNUPGHOME="${PWD}/.gnupg"
 rm -rf "${GNUPGHOME}"
-trap "rm -rf '${GNUPGHOME}'" EXIT
+trap 'echo "${ore_output-}"; rm -rf "${GNUPGHOME}"' EXIT
 mkdir --mode=0700 "${GNUPGHOME}"
 gpg --import verify.asc
+
+[ -s verify.asc ] && verify_key=--verify-key=verify.asc || verify_key=
 
 mkdir -p tmp
 
@@ -109,18 +109,14 @@ ore_output=$(bin/ore aws upload \
     --board="${BOARD}" \
     --create-pv=true \
     --name="${NAME}")
-echo "${ore_output}"
-ore_ret=$?
-if [[ "${ore_ret}" == "0" ]]; then
-    hvm_ami_id=$(echo "${ore_output}" | tail -n 1 | jq -r '.HVM')
-    pv_ami_id=$(echo "${ore_output}" | tail -n 1 | jq -r '.PV')
-    tee "${WORKSPACE}/ami.properties" <<EOF
+
+hvm_ami_id=$(echo "${ore_output}" | tail -n 1 | jq -r '.HVM')
+pv_ami_id=$(echo "${ore_output}" | tail -n 1 | jq -r '.PV')
+tee "${WORKSPACE}/ami.properties" <<EOF
 HVM_AMI_ID = "${hvm_ami_id}"
 PV_AMI_ID = "${pv_ami_id}"
 EOF
-fi
 
-exit $ore_ret
 '''  /* Editor quote safety: ' */
                 }
             }
@@ -141,7 +137,7 @@ exit $ore_ret
 stage('Downstream') {
     parallel failFast: false,
         ami_test_hvm: {
-            build job: './kola/aws.groovy', propagate: false, parameters: [
+            build job: '../kola/aws', propagate: false, parameters: [
                 string(name: 'AWS_DEV_CREDS', value: params.AWS_DEV_CREDS),
                 string(name: 'AWS_REGION', value: params.AWS_REGION),
                 string(name: 'AWS_AMI_ID', value: amiprops.HVM_AMI_ID),
@@ -150,7 +146,7 @@ stage('Downstream') {
             ]
         },
         ami_test_pv: {
-            build job: './kola/aws.groovy', propagate: false, parameters: [
+            build job: '../kola/aws', propagate: false, parameters: [
                 string(name: 'AWS_DEV_CREDS', value: params.AWS_DEV_CREDS),
                 string(name: 'AWS_REGION', value: params.AWS_REGION),
                 string(name: 'AWS_AMI_ID', value: amiprops.PV_AMI_ID),
