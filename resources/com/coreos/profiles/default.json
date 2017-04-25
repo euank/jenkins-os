@@ -59,7 +59,7 @@
      * This is the URL cloned by the os/manifest job to read the base
      * manifest files that define the OS build.
      */
-    "MANIFEST_URL": "https://github.com/coreos/manifest.git",
+    "MANIFEST_URL": "https://github.com/euank/manifest.git",
 
     /*
      * All of the files resulting from the build (OS images, firmware,
