@@ -80,7 +80,7 @@ sudo rm -rf tmp manifests
 # set up GPG for verifying tags
 export GNUPGHOME="${PWD}/.gnupg"
 rm -rf "${GNUPGHOME}"
-trap 'echo "${ore_output-}"; rm -rf "${GNUPGHOME}"' EXIT
+trap 'rm -rf "${GNUPGHOME}" "ore_amis"' EXIT
 mkdir --mode=0700 "${GNUPGHOME}"
 gpg --import verify.asc
 
@@ -102,16 +102,18 @@ source manifests/version.txt
 bunzip2 -k -f ./tmp/coreos_production_ami_vmdk_image.vmdk.bz2
 
 NAME="jenkins-${JOB_NAME##*/}-${BUILD_NUMBER}"
-ore_output=$(bin/ore aws upload \
+bin/ore aws upload \
     --bucket="${AWS_DEV_BUCKET}" \
     --region=${AWS_REGION} \
     --file=./tmp/coreos_production_ami_vmdk_image.vmdk \
     --board="${BOARD}" \
     --create-pv=true \
-    --name="${NAME}")
+    --name="${NAME}" \
+    | tee ore_amis
 
-hvm_ami_id=$(echo "${ore_output}" | tail -n 1 | jq -r '.HVM')
-pv_ami_id=$(echo "${ore_output}" | tail -n 1 | jq -r '.PV')
+hvm_ami_id=$(cat ore_amis | tail -n 1 | jq -r '.HVM')
+pv_ami_id=$(cat ore_amis | tail -n 1 | jq -r '.PV')
+
 tee "${WORKSPACE}/ami.properties" <<EOF
 HVM_AMI_ID = "${hvm_ami_id}"
 PV_AMI_ID = "${pv_ami_id}"
