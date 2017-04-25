@@ -8,7 +8,7 @@
      * These credentials should have sufficient access to S3 and EC2 to create
      * a development image and to run the related tests.
      */
-     "AWS_DEV_CREDS": "dev-aws",
+     "AWS_DEV_CREDS": " dev-aws",
      "AWS_DEV_BUCKET": "s3://s3-us-west-2.users.developer.core-os.net",
      "AWS_REGION": "us-west-2",
 
@@ -26,9 +26,9 @@
      * for cloning does not need to be over SSH if it is public, and in
      * that case, its credentials ID can be omitted or left blank.
      */
-    "BUILDS_CLONE_URL": "/manifests",
+    "BUILDS_CLONE_URL": "core@ec2-54-153-126-147.us-west-1.compute.amazonaws.com:manifests",
     "BUILDS_CLONE_CREDS": "",
-    "BUILDS_PUSH_URL": "/manifests",
+    "BUILDS_PUSH_URL": "core@ec2-54-153-126-147.us-west-1.compute.amazonaws.com:manifests",
     "BUILDS_PUSH_CREDS": "",
 
     /*
