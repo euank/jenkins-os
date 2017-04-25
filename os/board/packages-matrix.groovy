@@ -130,11 +130,6 @@ enter() {
   ./bin/cork enter --experimental -- env \
     CCACHE_DIR=/mnt/host/source/.cache/ccache \
     CCACHE_MAXSIZE=5G \
-    COREOS_DEV_BUILDS="${DOWNLOAD_ROOT}" \
-    PORTAGE_SSH_OPTS= \
-    {FETCH,RESUME}COMMAND_GS="/usr/bin/gangue get \
---json-key=/etc/portage/gangue.json $verify_key \
-"'"${URI}" "${DISTDIR}/${FILE}"' \
     "$@"
 }
 

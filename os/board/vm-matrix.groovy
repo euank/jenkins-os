@@ -176,11 +176,6 @@ enter() {
   verify_key=--verify-key=/etc/portage/gangue.asc || verify_key=
   trap 'sudo rm -f chroot/etc/portage/gangue.*' RETURN
   ./bin/cork enter --experimental -- env \
-    COREOS_DEV_BUILDS="${GS_DEVEL_ROOT}" \
-    PORTAGE_SSH_OPTS= \
-    {FETCH,RESUME}COMMAND_GS="/usr/bin/gangue get \
---json-key=/etc/portage/gangue.json $verify_key \
-"'"${URI}" "${DISTDIR}/${FILE}"' \
     "$@"
 }
 
