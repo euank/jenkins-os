@@ -37,8 +37,8 @@ if (Jenkins.instance.pluginManager.plugins.collect {
 }
 
 /* Define what to clone.  */
-final String REPO_URL = 'https://github.com/coreos/jenkins-os.git'
-final String REPO_BRANCH = 'master'
+final String REPO_URL = 'https://github.com/euank/jenkins-os.git'
+final String REPO_BRANCH = 'euank-test-jenkins'
 
 /*
  * Create a new folder project under the given parent model.
