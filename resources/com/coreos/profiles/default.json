@@ -26,9 +26,9 @@
      * for cloning does not need to be over SSH if it is public, and in
      * that case, its credentials ID can be omitted or left blank.
      */
-    "BUILDS_CLONE_URL": "core@ec2-54-153-126-147.us-west-1.compute.amazonaws.com:manifests",
-    "BUILDS_CLONE_CREDS": "b28de7d3-5bed-4308-849d-14e4791df0ab",
-    "BUILDS_PUSH_URL": "core@ec2-54-153-126-147.us-west-1.compute.amazonaws.com:manifests",
+    "BUILDS_CLONE_URL": "https://github.com/euank/manifest-builds.git",
+    "BUILDS_CLONE_CREDS": "",
+    "BUILDS_PUSH_URL": "ssh://git@github.com/euank/manifest-builds.git",
     "BUILDS_PUSH_CREDS": "b28de7d3-5bed-4308-849d-14e4791df0ab",
 
     /*
