@@ -292,7 +292,7 @@ stage('Downstream') {
                 text(name: 'VERIFY_KEYRING', value: params.VERIFY_KEYRING),
                 string(name: 'PIPELINE_BRANCH', value: params.PIPELINE_BRANCH)
             ]
-        }
+        },
         'aws_amis': {
             if (params.BOARD == 'amd64-usr' && params.COREOS_OFFICIAL != '1') {
                 build job: 'unofficial-ami', parameters: [
