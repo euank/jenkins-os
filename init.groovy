@@ -16,13 +16,12 @@
 
 /* Install required plugins and restart Jenkins, if necessary.  */
 final List<String> REQUIRED_PLUGINS = [
-    "cloudbees-folder",
+    "aws-credentials",
     "copyartifact",
     "git",
     "ssh-agent",
     "tap",
     "workflow-aggregator",
-    "aws-credentials",
 ]
 if (Jenkins.instance.pluginManager.plugins.collect {
         it.shortName
