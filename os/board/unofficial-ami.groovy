@@ -74,6 +74,8 @@ node('amd64') {
                          "MANIFEST_URL=${params.MANIFEST_URL}"]) {
 
                     rc = sh returnStatus: true, script: '''#!/bin/bash -ex
+set -o pipefail
+
 
 sudo rm -rf tmp manifests
 
