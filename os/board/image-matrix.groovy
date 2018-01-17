@@ -125,7 +125,7 @@ String torcxManifest = ''
 /* Read the version to skip fetching the manifest in downstream jobs.  */
 String version = ''
 
-node('coreos && amd64 && sudo') {
+node('benchtest && coreos && amd64 && sudo') {
     stage('Build') {
         step([$class: 'CopyArtifact',
               fingerprintArtifacts: true,

@@ -106,7 +106,7 @@ used to verify signed files and Git tags'''),
     ])
 ])
 
-node('coreos && amd64 && sudo') {
+node('benchtest && coreos && amd64 && sudo') {
     stage('Build') {
         step([$class: 'CopyArtifact',
               fingerprintArtifacts: true,

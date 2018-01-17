@@ -222,7 +222,7 @@ for (format in format_list) {
     matrix_map[FORMAT] = {
         def version = ''
 
-        node('coreos && amd64 && sudo') {
+        node('benchtest && coreos && amd64 && sudo') {
             step([$class: 'CopyArtifact',
                   fingerprintArtifacts: true,
                   projectName: '/mantle/master-builder',

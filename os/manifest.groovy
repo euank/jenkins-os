@@ -73,7 +73,7 @@ def dprops = [:]  /* Store properties read from an artifact later.  */
 def keyring = ''
 def releaseBase = params.RELEASE_BASE
 
-node('coreos && amd64 && sudo') {
+node('benchtest && coreos && amd64 && sudo') {
     stage('SCM') {
         checkout scm: [
             $class: 'GitSCM',
