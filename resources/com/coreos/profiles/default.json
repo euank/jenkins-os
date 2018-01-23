@@ -1,0 +1,89 @@
+/*
+ * This profile builds public testing and development images.
+ */
+{
+    /*
+     * The OS build ID should be changed when building with a different
+     * manifest job, when reusing build numbers would cause conflicting
+     * branch names in the manifest-builds repository.
+     */
+    "BUILD_ID_PREFIX": "euank-dev-",
+
+    /*
+     * The manifest-builds repository holds the manifest files for each
+     * new build from Jenkins.  It creates new builds by pushing them
+     * over SSH, and all the other jobs clone the repository.  The URL
+     * for cloning does not need to be over SSH if it is public, and in
+     * that case, its credentials ID can be omitted or left blank.
+     */
+    "BUILDS_CLONE_URL": "https://github.com/euank/manifest-builds.git",
+    "BUILDS_CLONE_CREDS": "",
+    "BUILDS_PUSH_URL": "ssh://git@github.com/euank/manifest-builds.git",
+    "BUILDS_PUSH_CREDS": "github-wobscale-bot",
+
+    /*
+     * When creating build commits in the manifest-builds repository,
+     * these values will be used for the author and committer.
+     */
+    "GIT_AUTHOR_EMAIL": "jenkins@jenkins-euank-dev.coreos",
+    "GIT_AUTHOR_NAME": "CoreOS Jenkins (fake)",
+
+    /*
+     * The generated images must have a default update group.
+     */
+    "GROUP": "developer",
+
+    /*
+     * The built OS files are uploaded to Google Storage, and they are
+     * downloaded by downstream jobs.  The development files such as
+     * binary packages and the SDK image may use a different storage
+     * location than the final OS images.
+     */
+    "GS_DEVEL_ROOT": "gs://builds.developer.core-os.net",
+    "GS_DEVEL_CREDS": "3648f293-23a9-425d-89b4-6f6d7d571399",
+    "GS_RELEASE_DOWNLOAD_ROOT": "gs://builds.developer.core-os.net",
+    "GS_RELEASE_ROOT": "gs://builds.developer.core-os.net",
+    "GS_RELEASE_CREDS": "3648f293-23a9-425d-89b4-6f6d7d571399",
+
+    /*
+     * This is the URL cloned by the os/manifest job to read the base
+     * manifest files that define the OS build.
+     */
+    "MANIFEST_URL": "https://github.com/coreos/manifest.git",
+
+    /*
+     * All of the files resulting from the build (OS images, firmware,
+     * digests, etc.) are signed with the following GPG key.  The given
+     * credentials ID should point to the private key file to be used,
+     * and the e-mail address identifies it to the GPG command.
+     */
+    "SIGNING_CREDS": "signing-key",
+    "SIGNING_USER": "euank-jenkins-dev@coreos",
+
+    /*
+     * The torcx manifests specify URLs from which to download torcx
+     * packages, prefixed with the TORCX_PUBLIC_DOWNLOAD_ROOT variable.
+     * The TORCX_ROOT variable is the location in Google Storage to
+     * upload and download packages during the build.
+     */
+    "TORCX_PUBLIC_DOWNLOAD_ROOT": "http://builds.developer.core-os.net/torcx",
+    "TORCX_ROOT": "gs://builds.developer.core-os.net/torcx",
+
+    /*
+     * A GPG keyring must be given to verify signed objects throughout
+     * the build.  It should provide the public keys of anyone that can
+     * sign release tags, as well as the public key of the user defined
+     * in SIGNING_USER above.  The value of VERIFY_KEYRING can be the
+     * entire ASCII-armored keyring from "gpg2 --armor --export" (since
+     * multi-line strings are supported here), or it can be given the
+     * following special format to read the keyring from an artifact:
+     *
+     *     artifact:JOB_NAME:FILE_NAME
+     *
+     * JOB_NAME should be the name of the job providing the artifact,
+     * including the full path with any parent folders.  FILE_NAME is
+     * the name of the artifact including any leading path component,
+     * which is taken from the last successful build.
+     */
+    "VERIFY_KEYRING": "artifact:/os/keyring:keyring.asc",
+}
