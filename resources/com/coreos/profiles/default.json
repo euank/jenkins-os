@@ -2,6 +2,9 @@
  * This profile builds public testing and development images.
  */
 {
+    /* Unused, but needed to make steps happy */
+    "AWS_REGION": "us-west-2",
+
     /*
      * The OS build ID should be changed when building with a different
      * manifest job, when reusing build numbers would cause conflicting
