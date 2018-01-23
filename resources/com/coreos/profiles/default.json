@@ -39,10 +39,10 @@
      * binary packages and the SDK image may use a different storage
      * location than the final OS images.
      */
-    "GS_DEVEL_ROOT": "gs://builds.developer.core-os.net",
+    "GS_DEVEL_ROOT": "gs://users.developer.core-os.net/euank-dev-jenkins",
     "GS_DEVEL_CREDS": "3648f293-23a9-425d-89b4-6f6d7d571399",
-    "GS_RELEASE_DOWNLOAD_ROOT": "gs://builds.developer.core-os.net",
-    "GS_RELEASE_ROOT": "gs://builds.developer.core-os.net",
+    "GS_RELEASE_DOWNLOAD_ROOT": "gs://users.developer.core-os.net/euank-dev-jenkins",
+    "GS_RELEASE_ROOT": "gs://users.developer.core-os.net/euank-dev-jenkins",
     "GS_RELEASE_CREDS": "3648f293-23a9-425d-89b4-6f6d7d571399",
 
     /*
@@ -66,8 +66,8 @@
      * The TORCX_ROOT variable is the location in Google Storage to
      * upload and download packages during the build.
      */
-    "TORCX_PUBLIC_DOWNLOAD_ROOT": "http://builds.developer.core-os.net/torcx",
-    "TORCX_ROOT": "gs://builds.developer.core-os.net/torcx",
+    "TORCX_PUBLIC_DOWNLOAD_ROOT": "http://users.developer.core-os.net/euank-dev-jenkins/torcx",
+    "TORCX_ROOT": "gs://users.developer.core-os.net/euank-dev-jenkins/torcx",
 
     /*
      * A GPG keyring must be given to verify signed objects throughout
