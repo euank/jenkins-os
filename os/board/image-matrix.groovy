@@ -195,29 +195,4 @@ stage('Downstream') {
                     string(name: 'PIPELINE_BRANCH', value: params.PIPELINE_BRANCH)
                 ]
         },
-        'kola-dev-container': {
-            if (params.BOARD == 'amd64-usr')
-                build job: '../kola/dev-container', propagate: false, parameters: [
-                    string(name: 'BOARD', value: params.BOARD),
-                    credentials(name: 'DOWNLOAD_CREDS', value: UPLOAD_CREDS),
-                    string(name: 'DOWNLOAD_ROOT', value: UPLOAD_ROOT),
-                    text(name: 'VERIFY_KEYRING', value: params.VERIFY_KEYRING),
-                    string(name: 'VERSION', value: version),
-                    string(name: 'PIPELINE_BRANCH', value: params.PIPELINE_BRANCH)
-                ]
-        },
-        'kola-qemu': {
-            if (params.BOARD == 'amd64-usr')
-                build job: '../kola/qemu', parameters: [
-                    credentials(name: 'BUILDS_CLONE_CREDS', value: params.BUILDS_CLONE_CREDS),
-                    credentials(name: 'DOWNLOAD_CREDS', value: UPLOAD_CREDS),
-                    string(name: 'DOWNLOAD_ROOT', value: UPLOAD_ROOT),
-                    string(name: 'MANIFEST_NAME', value: params.MANIFEST_NAME),
-                    string(name: 'MANIFEST_TAG', value: params.MANIFEST_TAG),
-                    string(name: 'MANIFEST_URL', value: params.MANIFEST_URL),
-                    text(name: 'TORCX_MANIFEST', value: torcxManifest),
-                    text(name: 'VERIFY_KEYRING', value: params.VERIFY_KEYRING),
-                    string(name: 'PIPELINE_BRANCH', value: params.PIPELINE_BRANCH)
-                ]
-        }
 }
