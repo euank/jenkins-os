@@ -30,7 +30,10 @@ be released quickly.'''),
 https://undocumented.software/wiki_dump/Doc%3A_Using_manifests%2Cen.html#The_local_manifest"""),
         string(name: 'PIPELINE_BRANCH',
                defaultValue: 'master',
-               description: 'Branch to use for fetching the pipeline jobs')
+               description: 'Branch to use for fetching the pipeline jobs'),
+        string(name: 'NODE_SELECTOR',
+               defaultValue: '',
+               description: 'Single node selector to && in')
     ])
 ])
 
@@ -73,7 +76,7 @@ def dprops = [:]  /* Store properties read from an artifact later.  */
 def keyring = ''
 def releaseBase = params.RELEASE_BASE
 
-node('benchtest && coreos && amd64 && sudo') {
+node("${params.NODE_SELECTOR} && coreos && amd64 && sudo") {
     stage('SCM') {
         checkout scm: [
             $class: 'GitSCM',
@@ -321,7 +324,8 @@ stage('Downstream') {
                     string(name: 'TORCX_PUBLIC_DOWNLOAD_ROOT', value: profile.TORCX_PUBLIC_DOWNLOAD_ROOT),
                     string(name: 'TORCX_ROOT', value: profile.TORCX_ROOT),
                     text(name: 'VERIFY_KEYRING', value: keyring),
-                    string(name: 'PIPELINE_BRANCH', value: params.PIPELINE_BRANCH)
+                    string(name: 'PIPELINE_BRANCH', value: params.PIPELINE_BRANCH),
+                    string(name: 'NODE_SELECTOR', value: params.NODE_SELECTOR)
                 ]
             }
         }
@@ -342,7 +346,8 @@ stage('Downstream') {
                     credentials(name: 'SIGNING_CREDS', value: profile.SIGNING_CREDS),
                     string(name: 'SIGNING_USER', value: profile.SIGNING_USER),
                     text(name: 'VERIFY_KEYRING', value: keyring),
-                    string(name: 'PIPELINE_BRANCH', value: params.PIPELINE_BRANCH)
+                    string(name: 'PIPELINE_BRANCH', value: params.PIPELINE_BRANCH),
+                    string(name: 'NODE_SELECTOR', value: params.NODE_SELECTOR)
                 ]
             },
             toolchains: {
@@ -363,7 +368,8 @@ stage('Downstream') {
                     string(name: 'TORCX_PUBLIC_DOWNLOAD_ROOT', value: profile.TORCX_PUBLIC_DOWNLOAD_ROOT),
                     string(name: 'TORCX_ROOT', value: profile.TORCX_ROOT),
                     text(name: 'VERIFY_KEYRING', value: keyring),
-                    string(name: 'PIPELINE_BRANCH', value: params.PIPELINE_BRANCH)
+                    string(name: 'PIPELINE_BRANCH', value: params.PIPELINE_BRANCH),
+                    string(name: 'NODE_SELECTOR', value: params.NODE_SELECTOR)
                 ]
             }
 }

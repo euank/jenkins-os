@@ -66,11 +66,14 @@ Google Storage URL, requires write permission''',
 used to verify signed files and Git tags'''),
         string(name: 'PIPELINE_BRANCH',
                defaultValue: 'master',
-               description: 'Branch to use for fetching the pipeline jobs')
+               description: 'Branch to use for fetching the pipeline jobs'),
+        string(name: 'NODE_SELECTOR',
+               defaultValue: '',
+               description: 'Single node selector to && in')
     ])
 ])
 
-node('benchtest && coreos && amd64 && sudo') {
+node("${params.NODE_SELECTOR} && coreos && amd64 && sudo") {
     stage('Build') {
         step([$class: 'CopyArtifact',
               fingerprintArtifacts: true,
@@ -152,7 +155,8 @@ stage('Downstream') {
                 string(name: 'TORCX_PUBLIC_DOWNLOAD_ROOT', value: params.TORCX_PUBLIC_DOWNLOAD_ROOT),
                 string(name: 'TORCX_ROOT', value: params.TORCX_ROOT),
                 text(name: 'VERIFY_KEYRING', value: params.VERIFY_KEYRING),
-                string(name: 'PIPELINE_BRANCH', value: params.PIPELINE_BRANCH)
+                string(name: 'PIPELINE_BRANCH', value: params.PIPELINE_BRANCH),
+                string(name: 'NODE_SELECTOR', value: params.NODE_SELECTOR)
             ]
         }
     }

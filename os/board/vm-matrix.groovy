@@ -66,7 +66,10 @@ Google Storage URL, requires write permission''',
 used to verify signed files and Git tags'''),
         string(name: 'PIPELINE_BRANCH',
                defaultValue: 'master',
-               description: 'Branch to use for fetching the pipeline jobs')
+               description: 'Branch to use for fetching the pipeline jobs'),
+        string(name: 'NODE_SELECTOR',
+               defaultValue: '',
+               description: 'Single node selector to && in')
     ])
 ])
 
@@ -85,7 +88,7 @@ for (format in format_list) {
     matrix_map[FORMAT] = {
         def version = ''
 
-        node('benchtest && coreos && amd64 && sudo') {
+        node("${params.NODE_SELECTOR} && coreos && amd64 && sudo") {
             step([$class: 'CopyArtifact',
                   fingerprintArtifacts: true,
                   projectName: '/mantle/master-builder',
