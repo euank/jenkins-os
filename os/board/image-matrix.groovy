@@ -199,5 +199,5 @@ stage('Downstream') {
                     string(name: 'PIPELINE_BRANCH', value: params.PIPELINE_BRANCH),
                     string(name: 'NODE_SELECTOR', value: params.NODE_SELECTOR)
                 ]
-        },
+        }
 }
