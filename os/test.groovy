@@ -220,7 +220,6 @@ enter gpg --import < "${GPG_SECRET_KEY_FILE}"
 if [[ -n "${GPG_SECRET_KEY_PIN}" ]]; then
     # Container Linux gpg doesn't have smartcard support, sign in the sdk
     # Wrap gpg to avoid pinentry prompts and tty issues
-    local passphrase
     passphrase=$(cat "${GPG_SECRET_KEY_PIN}")
     cat > "gpg" <<EOF
 #!/bin/bash
