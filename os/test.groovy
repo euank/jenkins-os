@@ -156,7 +156,7 @@ EOF
 # Set up GPG for verifying tags.
 export GNUPGHOME="${PWD}/.gnupg"
 rm -rf "${GNUPGHOME}"
-trap 'rm -rf "${GNUPGHOME}"' EXIT
+# trap 'rm -rf "${GNUPGHOME}"' EXIT
 mkdir --mode=0700 "${GNUPGHOME}"
 gpg --import verify.asc
 
