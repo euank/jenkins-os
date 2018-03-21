@@ -98,7 +98,7 @@
      */
     "SIGNING_CREDS": "buildbot-subkey-7FB32ABC0638EB2F-stub",
     "SIGNING_CREDS_PIN": "jenkins-yubikey-05621930",
-    "SIGNING_USER": "0xDE2F8F87EF4B4ED9!",
+    "SIGNING_USER": "0x7FB32ABC0638EB2F!",
 
     /*
      * The torcx manifests specify URLs from which to download torcx
